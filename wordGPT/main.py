@@ -7,25 +7,27 @@ import time  # test
 
 root = 0
 wordEntry = 0
+recommendedWordLable = 0
+exampleSentencesLable = 0
 
 def wordAddBtnClicked():
+    global recommendedWordLable, exampleSentencesLable
+
     word = wordEntry.get()
     bn = "\n"
 
     print(word)
     recommendedWords = gpt_request.getWords(word, 3)
     recommendedWordlableText = f"<유의어>\n{bn.join(recommendedWords['syntonyms'])}" + bn * 2 + f"<반의어>\n{bn.join(recommendedWords['antonyms'])}" + bn * 2 + f"<추천 단어>\n{bn.join(recommendedWords['recommendations'])}"
-    recommendedWordLable = tkinter.Label(root, text=recommendedWordlableText)
-    recommendedWordLable.pack()
+    recommendedWordLable.configure(text=recommendedWordlableText)
 
     exampleSentences = gpt_request.getSentences(word, 2)
     exampleSentencesLableText = f"\n<예문>\n{bn.join(exampleSentences)}"
-    exampleSentencesLable = tkinter.Label(root, text=exampleSentencesLableText)
-    exampleSentencesLable.pack()
+    exampleSentencesLable.configure(text=exampleSentencesLableText)
 
 
 def main():
-    global root, wordEntry
+    global root, wordEntry, recommendedWordLable, exampleSentencesLable
     root = tkinter.Tk()
     root.title("pyTodo")
     root.geometry("640x480+300+300")
@@ -54,10 +56,20 @@ def main():
     #     treeview.insert('', 'end', text="", values=treelist[i], iid=i)
 
     wordEntry = tkinter.Entry(root, width=20)
-    wordEntry.pack()
+    wordEntry.grid(row=0, column=0)
+    # wordEntry.pack()
 
     wordAddBtn = tkinter.Button(root, width=3, text="+", command=wordAddBtnClicked)
-    wordAddBtn.pack()
+    wordAddBtn.grid(row=0, column=1)
+    # wordAddBtn.pack()
+
+    recommendedWordLable = tkinter.Label(root, text="")
+    recommendedWordLable.grid(row=1, column=0, columnspan=2)
+    # recommendedWordLable.pack()
+
+    exampleSentencesLable = tkinter.Label(root, text="")
+    exampleSentencesLable.grid(row=2, column=0, columnspan=2)
+    # exampleSentencesLable.pack()
 
     root.mainloop()
 

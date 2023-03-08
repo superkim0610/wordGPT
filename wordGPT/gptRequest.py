@@ -2,21 +2,20 @@ import requests
 import env
 
 def getRequest(prompt):
-  API_KEY = env.getEnv("API_KEY")
   URL = "https://api.openai.com/v1/completions"
   headers = {"Content-type": "application/json", "Authorization": "Bearer " + API_KEY}
   data = {
     "model": "text-davinci-003",
     "prompt": prompt,
     "max_tokens": 100,
-    "temperature": 0.7,
+    "temperature": 0.8,
     "frequency_penalty": 0,
     "presence_penalty": 0,
     "top_p": 1,
   }
 
   response = requests.post(URL, headers=headers, json=data)
-  return response.json()["choices"][0]["text"]
+  return response.json()["choices"][0]["text"].strip()
 
 def getWords(word, number):
   prompt = f"syntonym words of \"{word}\"(separate by comma, {number} words)"
@@ -35,12 +34,9 @@ def getWords(word, number):
   }
 
 def getSentences(word, number):
-  prompt = f"recommended words that will help memorize related with \"{word}\"(separate by comma, {answer_number} words\nsupply, furnish, render\nreccomendation reason)"
-  sentences = getSentences(prompt).split(',')
+  prompt = f"example sentences of \"{word}\"(separate by line, {number} sentences, None ordinal number, only sentences)"
+  sentences = getRequest(prompt).split('\n')
 
   return sentences
 
-
-
-
-
+API_KEY = env.getEnv("API_KEY")

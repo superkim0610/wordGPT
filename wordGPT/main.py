@@ -29,7 +29,7 @@ def wordAddBtnClicked():
 def main():
     global root, wordEntry, recommendedWordLable, exampleSentencesLable
     root = tkinter.Tk()
-    root.title("pyTodo")
+    root.title("gptWord")
     root.geometry("640x480+300+300")
     root.resizable(False, False)
 
@@ -57,10 +57,12 @@ def main():
 
     wordEntry = tkinter.Entry(root, width=20)
     wordEntry.grid(row=0, column=0)
+    # wordEntry.place(x=230)
     # wordEntry.pack()
 
     wordAddBtn = tkinter.Button(root, width=3, text="+", command=wordAddBtnClicked)
     wordAddBtn.grid(row=0, column=1)
+    # wordAddBtn.place(x=370, height=24)
     # wordAddBtn.pack()
 
     recommendedWordLable = tkinter.Label(root, text="")

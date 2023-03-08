@@ -4,13 +4,18 @@ import env
 env.loadEnv()
 API_KEY = env.getEnv("API_KEY")
 
+# prompt = "answer syntax(sparator=comma, suffix=;, none space)\neach 3 antonym word of \"orange\""
+prompt = "answer syntax : word1,word2;\neach 3 syntonym words of \"orange\""
+
 URL = "https://api.openai.com/v1/completions"
-headers = {'Content-type': 'application/json', "Authorization": "Bearer "+API_KEY}
+headers = {"Content-type": "application/json", "Authorization": "Bearer "+API_KEY}
 data = {
   "model": "text-davinci-003",
-  "prompt": "Say this is a test",
-  "max_tokens": 7,
+  "prompt": prompt,
+  "max_tokens": 100,
   "temperature": 0,
+  "frequency_penalty":0,
+  "presence_penalty":0,
   "top_p": 1,
 }
 
